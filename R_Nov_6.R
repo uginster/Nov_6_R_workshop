@@ -266,23 +266,27 @@ analyze_all(countries)
 
 
 
-# This is what the instructor did, but I didn't get it all
-analyze_all <- function(file,countries){
+# This is what the instructor did, but not working for me
+analyze_data <- function(file, new) {
   file_out <- read.csv(file, header = TRUE)
   country_name <- subset(file_out, file_out$country == new)
-  out2 <-c("Mean_LE" = mean(country_name$lifeExp), "Min_LE" = min(country_name$lifeExp),"Max_LE" =max(country_name$lifeExp))
-  
-  
-  
-  for(w in countries){
-    print(mean(country_name$lifeExp))
-    print(min(country_name$lifeExp))
-    print(max(country_name$lifeExp))
-    out <- c("country" = w, "Mean_LE" = mean(country_name$lifeExp), "Min_LE" = min(country_name$lifeExp), "Max_LE" =max(country_name$lifeExp))
-    plot(x=country_name$year, y=country_name$lifeExp, xlab = "Year", ylab = "Life Expectancy", main=w)
-    print(out)
+  out2 <- c("Mean_le" = mean(country_name$lifeExp), 
+            "Min_le" = min(country_name$lifeExp), 
+            "Max_le" = max(country_name$lifeExp))
+  print(file)
+  print(new)
+  print(out2)
+  plot(country_name$year, country_name$lifeExp, xlab="Year", ylab="Life Expectancy", 
+       main=new) 
+}
+
+analyze_data("data/gapminder.csv", "Uganda")
+
+analyze_all <- function(pattern, new) {
+  filenames <- list.files(path = "data", pattern = pattern, full.names = TRUE)
+  for (f in filenames) {
+    analyze_data(f,new )
   }
 }
 
-countries <- c("Albania", "Uganda", "Germany")
-analyze_all("data/gapminder.csv",countries)
+analyze_all(".csv", "Uganda")
