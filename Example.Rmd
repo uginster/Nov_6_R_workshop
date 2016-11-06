@@ -1,0 +1,32 @@
+---
+title: "Advanced_R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+### This script does
+```{r}
+New_dat = read.csv("data/gapminder.csv")
+
+analyze_data <- function(file, new) {
+  CountryDat <- subset(file, file$country == new)
+  plot(CountryDat$year, CountryDat$gdpPercap, xlab="Year", ylab="GDP", 
+       main=new) 
+}
+
+
+analyze_all <- function(datafile, countryname) {
+  for (w in countryname) {
+    analyze_data(datafile,w )
+  }
+}
+
+countries = c("Uganda", "Albania", "Italy")
+analyze_all(New_dat,countries)
+```
+
+
